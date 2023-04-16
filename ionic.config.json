@@ -1,0 +1,7 @@
+{
+  "name": "numbersfight",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
