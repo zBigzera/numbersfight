@@ -1,20 +1,20 @@
 <ion-header [translucent]="true">
-  
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="container">
     <div class="circle">
-      <span class="number">30</span>
+      <span class="number">{{score}}</span>
     </div>
     <div class="textnumb">High Score</div>
   </div>
-  
+
   <div id="conteiner-button">
-  
+
     <ion-button class="buttonjg" href="contas">Play Again</ion-button>
     <br>
-    <ion-button class="buttonjg">Reset</ion-button>
+    <ion-button class="buttonjg" (click)="reset()">Reset</ion-button>
   </div>
 
 </ion-content>

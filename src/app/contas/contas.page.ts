@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-
+import { Storage } from '@capacitor/storage';
 @Component({
   selector: 'app-contas',
   templateUrl: './contas.page.html',
@@ -15,8 +15,16 @@ export class ContasPage implements OnInit {
   public timeLeft = 20;
   public displayTime: string = "20";
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { 
+     this.gerar_equacao();
+    this.ver();
+  }
+  valor1 : any = 1;
+  valor2 : any = 1;
+  resultado: any;
+  score: number = 0;
 
+  formulario: any = {valor: ''};
   ngOnInit() {
     this.startTimer();
   }
@@ -32,4 +40,36 @@ export class ContasPage implements OnInit {
       }
     }, 1000);
   }
+
+  gerar_equacao() {
+    this.valor1 += Math.floor(Math.random() * 10);
+    this.valor2 += Math.floor(Math.random() * 10);
+    this.resultado = this.valor1 * this.valor2;
+  }
+
+  checar_resultado() {
+    if (this.formulario.valor == this.resultado) {
+      this.ver();
+      this.score += 10;
+      this.salvar();
+      window.location.reload();
+    } else {
+      alert("Errado!");
+      this.router.navigate(['home']);
+    }
+  }
+
+  async salvar(){
+    await Storage.set({
+      key: 'score',
+      value: String(this.score),
+    });
+  }
+
+  async ver() {
+    const { value } = await Storage.get({ key: 'score' });
+    this.score = Number(value);
+  }
+
+
 }

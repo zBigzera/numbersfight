@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -14,6 +14,11 @@
     </div>
   </div>
   <br>
+  <div class="quiz">
+    <h1>{{valor1}} x {{valor2}} = </h1>
+    <ion-input color="dark" label="Insira aqui o resultado" type="number" label-placement="floating" fill="outline" [(ngModel)]="formulario.valor"></ion-input>
+    <ion-button color="light" (click)="checar_resultado()" >Enviar</ion-button>
+  </div>
 
 
 </ion-content>
