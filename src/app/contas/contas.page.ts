@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@capacitor/storage';
+
 @Component({
   selector: 'app-contas',
   templateUrl: './contas.page.html',
@@ -11,32 +12,38 @@ import { Storage } from '@capacitor/storage';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class ContasPage implements OnInit {
+export class ContasPage implements OnInit, OnDestroy {
   public timeLeft = 20;
   public displayTime: string = "20";
+  private interval: any;
 
   constructor(private router: Router) { 
      this.gerar_equacao();
     this.ver();
-    this.startTimer();
   }
+  
   valor1 : any = 1;
   valor2 : any = 1;
   resultado: any;
   score: number = 0;
 
   formulario: any = {valor: ''};
+  
   ngOnInit() {
-    
+    this.startTimer();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.interval);
   }
 
   startTimer() {
-  const interval=   setInterval(() => {
+    this.interval = setInterval(() => {
       this.timeLeft--;
       this.displayTime = `${this.timeLeft.toString().padStart(2, '0')}`;
       if (this.timeLeft <= 0) {
-        clearInterval(interval);
-         alert("O tempo acabou!")
+        clearInterval(this.interval);
+        alert("O tempo acabou!")
         this.router.navigate(['home']);
       }
     }, 1000);
@@ -56,6 +63,7 @@ export class ContasPage implements OnInit {
       window.location.reload();
     } else {
       alert("Errado!");
+      clearInterval(this.interval);
       this.router.navigate(['home']);
     }
   }
@@ -71,6 +79,4 @@ export class ContasPage implements OnInit {
     const { value } = await Storage.get({ key: 'score' });
     this.score = Number(value);
   }
-
-
 }
