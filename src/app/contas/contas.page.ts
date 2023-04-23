@@ -18,6 +18,7 @@ export class ContasPage implements OnInit {
   constructor(private router: Router) { 
      this.gerar_equacao();
     this.ver();
+    this.startTimer();
   }
   valor1 : any = 1;
   valor2 : any = 1;
@@ -26,7 +27,7 @@ export class ContasPage implements OnInit {
 
   formulario: any = {valor: ''};
   ngOnInit() {
-    this.startTimer();
+    
   }
 
   startTimer() {
